@@ -2,6 +2,7 @@
 /sql/*
 /.dbup/*
 /.idea/*
+/.vscode/*
 /.DS_Store
 /phpunit.phar
 /composer.phar
