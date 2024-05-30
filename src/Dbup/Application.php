@@ -150,7 +150,7 @@ EOL;
             break;
         }
 
-        error_log($file . PHP_EOL, 3, "d:/temp/mylog.txt");
+        return $file ?? null;
         return $file;
     }
 
