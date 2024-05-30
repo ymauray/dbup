@@ -132,7 +132,7 @@ EOL;
      * find sql file by the file name
      * @throws Exception\RuntimeException
      */
-    public function getSqlFileByName(string $fileName)
+    public function getSqlFileByName(string $fileName): \SplFileInfo|null
     {
         $sqlFinder = $this->getFinder();
 
@@ -145,13 +145,12 @@ EOL;
             throw new RuntimeException('cannot find File:' . $fileName);
         }
 
-        /** @var string $file */
+        /** @var SplFileInfo $file */
         foreach ($files as $file) {
             break;
         }
 
         return $file ?? null;
-        return $file;
     }
 
     /**
