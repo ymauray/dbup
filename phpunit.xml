@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+         backupGlobals="false"
+         colors="false"
+         processIsolation="false"
+         stopOnFailure="false"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false">
+  <testsuites>
+    <testsuite name="Dbup Test Suite">
+      <directory>./tests/Dbup/</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
