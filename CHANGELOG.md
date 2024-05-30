@@ -1,7 +1,13 @@
 CHANGELOG
 =========
 
+* 0.6 (2024-05-30)
+
+ * 220e42d feat: added a few analyzers 
+ * fe92f76 fix: type hints and other changes, from static analyzers
+
 * 0.5 (2014-10-06)
+
  * c44b0f8 Fix url of phpunit.phar
  * 327bbf1 Option --ini is optional in CreateCommand.
  * 4bdd259 Fixing timstamp pattern to day with leading zeros in CreateCommand.
