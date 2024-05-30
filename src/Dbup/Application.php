@@ -239,7 +239,7 @@ EOL;
         }
         $queries = explode(';', $contents);
 
-        /** @var \Pdo|null $dbh */
+        /** @var \PDO|null $dbh */
         $dbh = null;
 
         /** @var string|null $cleanedQuery */
