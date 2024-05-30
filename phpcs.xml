@@ -1,0 +1,14 @@
+<ruleset name="dbup">
+    <description>dbup coding standard based on PSR12.</description>
+
+    <!-- Include the whole Zend standard -->
+    <rule ref="PSR12" >
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
+        <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
+        <exclude name="Squiz.Scope.MethodScope.Missing" />
+        <exclude name="PSR2.Classes.PropertyDeclaration.ScopeMissing" />
+        <exclude name="Generic.NamingConventions.UpperCaseConstantName.ClassConstantNotUpperCase" />
+        <exclude name="PSR12.Files.FileHeader.IncorrectOrder" />
+        <exclude name="PSR2.Classes.PropertyDeclaration.VarUsed" />
+    </rule>
+</ruleset>
