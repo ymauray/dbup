@@ -132,7 +132,7 @@ EOL;
      * find sql file by the file name
      * @throws Exception\RuntimeException
      */
-    public function getSqlFileByName(string $fileName)
+    public function getSqlFileByName(string $fileName): \SplFileInfo|null
     {
         $sqlFinder = $this->getFinder();
 
@@ -145,7 +145,12 @@ EOL;
             throw new RuntimeException('cannot find File:' . $fileName);
         }
 
-        return $files[0];
+        /** @var SplFileInfo $file */
+        foreach ($files as $file) {
+            break;
+        }
+
+        return $file ?? null;
     }
 
     /**
@@ -231,7 +236,7 @@ EOL;
     /**
      * update database
      */
-    public function up(SplFileInfo $file): void
+    public function up(\SplFileInfo $file): void
     {
         $contents = file_get_contents($file->getPathName());
         if (false === $contents) {
@@ -239,7 +244,7 @@ EOL;
         }
         $queries = explode(';', $contents);
 
-        /** @var \Pdo|null $dbh */
+        /** @var \PDO|null $dbh */
         $dbh = null;
 
         /** @var string|null $cleanedQuery */
@@ -272,7 +277,7 @@ EOL;
     /**
      * copy applied sql file to the applied directory.
      */
-    public function copyToAppliedDir(SplFileInfo $file): void
+    public function copyToAppliedDir(\SplFileInfo $file): void
     {
         if (false === copy($file->getPathName(), $this->appliedFilesDir . '/' . $file->getFileName())) {
             throw new RuntimeException('cannot copy the sql file to applied directory. check the <info>' . $this->appliedFilesDir . '</info> directory.');

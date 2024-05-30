@@ -3,11 +3,22 @@ namespace Dbup\Tests\Command;
 
 use Dbup\Application;
 use Dbup\Command\CreateCommand;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Dbup\Command\InitCommand;
 
-class CreateCommandTest extends \PHPUnit_Framework_TestCase
+class CreateCommandTest extends TestCase
 {
+    public function setUp() : void
+    {
+        \Hamcrest\Util::registerGlobalFunctions();
+    }
+
+    public function tearDown(): void
+    {
+        $this->addToAssertionCount(\Hamcrest\MatcherAssert::getCount());
+    }
+
     public function testCreate()
     {
         $application = \Phake::partialMock('Dbup\Application');
@@ -19,7 +30,7 @@ class CreateCommandTest extends \PHPUnit_Framework_TestCase
             [
                 'command' => $command->getName(),
                 'name' => 'foo',
-                '--ini' => __DIR__ . '/../.dbup/properties.ini.test',
+                '--ini' => __DIR__ . '/../../.dbup/properties.ini.test',
             ]
         );
 
@@ -30,6 +41,6 @@ class CreateCommandTest extends \PHPUnit_Framework_TestCase
         assertThat(1, count($matches));
 
         $migration = str_replace("'", "", $matches[0]);
-        unlink(__DIR__ . '/../../../' . $migration);
+        unlink(__DIR__ . '/../../../../' . $migration);
     }
 }

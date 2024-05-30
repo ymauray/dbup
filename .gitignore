@@ -9,3 +9,5 @@
 /php-cs-fixer.phar
 /phpunit.xml
 /composer.lock
+
+.phpunit.result.cache

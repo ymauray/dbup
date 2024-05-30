@@ -13,6 +13,7 @@ namespace Dbup\Command;
 
 use Dbup\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -110,8 +111,8 @@ EOL
     {
         $statuses = $app->getUpCandidates();
 
-        $progress = $app->getHelperSet()->get('progress');
-        $progress->start($output, count($statuses));
+        $progress = new ProgressBar($output);
+        $progress->start(count($statuses));
 
         foreach ($statuses as $status) {
             $output->writeln('<info>applying... :</info>' .  $status->file->getFileName());

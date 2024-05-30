@@ -2,11 +2,22 @@
 namespace Dbup\Tests\Command;
 
 use Dbup\Application;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Dbup\Command\UpCommand;
 
-class UpCommandTest extends \PHPUnit_Framework_TestCase
+class UpCommandTest extends TestCase
 {
+    public function setUp() : void
+    {
+        \Hamcrest\Util::registerGlobalFunctions();
+    }
+
+    public function tearDown(): void
+    {
+        $this->addToAssertionCount(\Hamcrest\MatcherAssert::getCount());
+    }
+
     public function testDryRunMode()
     {
         $application = \Phake::partialMock('Dbup\Application');
@@ -15,7 +26,7 @@ class UpCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('up');
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName(),
-                '--ini' => __DIR__ . '/../.dbup/properties.ini.test',
+                '--ini' => __DIR__ . '/../../.dbup/properties.ini.test',
                 '--dry-run' => true,
             ]);
         assertThat($commandTester->getDisplay(), is(containsString('now up is dry-run mode (--dry-run), so display only')));
@@ -28,13 +39,12 @@ class UpCommandTest extends \PHPUnit_Framework_TestCase
         $application = \Phake::partialMock('Dbup\Application');
         /** want not to run, so change up method to mock */
         \Phake::when($application)->up(\Phake::anyParameters())->thenReturn(null);
-
         $application->add(new UpCommand());
 
         $command = $application->find('up');
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName(),
-                '--ini' => __DIR__ . '/../.dbup/properties.ini.test',
+                '--ini' => __DIR__ . '/../../.dbup/properties.ini.test',
             ]);
 
         \Phake::verify($application, \Phake::times(2))->up(\Phake::anyParameters());
@@ -51,7 +61,7 @@ class UpCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('up');
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName(),
-                '--ini' => __DIR__ . '/../.dbup/properties.ini.test',
+                '--ini' => __DIR__ . '/../../.dbup/properties.ini.test',
                 'file' => 'V12__sample12_select.sql',
             ]);
 

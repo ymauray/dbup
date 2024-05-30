@@ -13,6 +13,7 @@ namespace Dbup\Command;
 
 use Dbup\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,13 +69,12 @@ dbup checks whether sql files were applied or not by comparing the file names in
             $rows[] = [$appliedAt, $status->file->getFileName()];
         }
 
-        /** @var TableHelper $table */
-        $table = $app->getHelperSet()->get('table');
+        $table = new Table($output);
         $table
             ->setHeaders(['Applied At', 'Migration Sql File'])
             ->setRows($rows)
         ;
-        $table->render($output);
+        $table->render();
 
         return null;
     }

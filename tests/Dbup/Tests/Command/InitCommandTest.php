@@ -2,24 +2,35 @@
 namespace Dbup\Tests\Command;
 
 use Dbup\Application;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Dbup\Command\InitCommand;
 
-class InitCommandTest extends \PHPUnit_Framework_TestCase
+class InitCommandTest extends TestCase
 {
+    public function setUp() : void
+    {
+        \Hamcrest\Util::registerGlobalFunctions();
+    }
+
+    public function tearDown(): void
+    {
+        $this->addToAssertionCount(\Hamcrest\MatcherAssert::getCount());
+    }
+
     public function testInitializeDirsAndFiles()
     {
         /**
          * dirs and files to create.
          */
         $dirs = [
-            __DIR__ . '/../../../sql',
-            __DIR__ . '/../../../.dbup/applied',
-            __DIR__ . '/../../../.dbup',
+            __DIR__ . '/../../../../sql',
+            __DIR__ . '/../../../../.dbup/applied',
+            __DIR__ . '/../../../../.dbup',
         ];
         $files = [
-            __DIR__ . '/../../../sql/V1__sample_select.sql',
-            __DIR__ . '/../../../.dbup/properties.ini',
+            __DIR__ . '/../../../../sql/V1__sample_select.sql',
+            __DIR__ . '/../../../../.dbup/properties.ini',
         ];
 
         /**
