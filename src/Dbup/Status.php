@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of Dbup.
  *
@@ -13,7 +14,6 @@ class Status
 {
     public $appliedAt = '';
     public $file;
-
     public function __construct($appliedAt, $file)
     {
         $this->appliedAt = $appliedAt;

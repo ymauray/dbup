@@ -1,4 +1,7 @@
 <?php
+
 namespace Dbup\Exception;
 
-class RuntimeException extends \RuntimeException{}
+class RuntimeException extends \RuntimeException
+{
+}

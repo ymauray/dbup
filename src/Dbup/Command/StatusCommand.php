@@ -11,19 +11,20 @@
 
 namespace Dbup\Command;
 
+use Dbup\Application;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dbup\Exception\RuntimeException;
+use Symfony\Component\Console\Helper\TableHelper;
 
 /**
  * @author Masao Maeda <brt.river@gmail.com>
  */
 class StatusCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('status')
@@ -43,8 +44,9 @@ dbup checks whether sql files were applied or not by comparing the file names in
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
+        /** @var Application $app */
         $app = $this->getApplication();
         $ini = $input->getOption('ini');
         if (!$ini) {
@@ -61,11 +63,12 @@ dbup checks whether sql files were applied or not by comparing the file names in
         $output->writeln('<info>dbup migration status</info>');
 
         $rows = [];
-        foreach($statuses as $status){
-            $appliedAt = $status->appliedAt === '' ? "appending...": $status->appliedAt;
+        foreach ($statuses as $status) {
+            $appliedAt = $status->appliedAt === '' ? "appending..." : $status->appliedAt;
             $rows[] = [$appliedAt, $status->file->getFileName()];
         }
 
+        /** @var TableHelper $table */
         $table = $app->getHelperSet()->get('table');
         $table
             ->setHeaders(['Applied At', 'Migration Sql File'])
@@ -73,5 +76,6 @@ dbup checks whether sql files were applied or not by comparing the file names in
         ;
         $table->render($output);
 
+        return null;
     }
 }

@@ -1,17 +1,18 @@
 <?php
+
 namespace Dbup\Database;
 
 use Dbup\Exception\RuntimeException;
+use PDO;
 
 class PdoDatabase
 {
-    private $connection = null ;
-    private $dsn;
-    private $user;
-    private $password;
-    private $driverOptions;
-
-    public function __construct($dsn, $user, $password, $driverOptions = [])
+    private \PDO|null $connection = null ;
+    private string $dsn;
+    private string|null $user;
+    private string|null $password;
+    private array|null $driverOptions;
+    public function __construct(string $dsn, string|null $user, string|null $password, array|null $driverOptions = [])
     {
         $this->dsn = $dsn;
         $this->user = $user;
@@ -19,12 +20,14 @@ class PdoDatabase
         $this->driverOptions = $driverOptions;
     }
 
-    public function connection($new = false){
+    public function connection($new = false): \PDO
+    {
         if (null === $this->connection || true === $new) {
             try {
-                $this->connection = new \PDO($this->dsn, $this->user, $this->password, $this->driverOptions);
+                $this->connection = new PDO($this->dsn, $this->user, $this->password, $this->driverOptions);
                 $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            } catch(\PDOException $e) {
+                $this->connection->setAttribute(\PDO::ATTR_AUTOCOMMIT, false);
+            } catch (\PDOException $e) {
                 throw new RuntimeException($e->getMessage());
             }
         }
