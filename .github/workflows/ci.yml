@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
+      - name: Composer (php-actions)
+        uses: php-actions/composer@v6
+      - name: PHPUnit (php-actions)
+        uses: php-actions/phpunit@v4
+        with:
+          bootstrap: vendor/autoload.php
