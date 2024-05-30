@@ -23,7 +23,7 @@ use Dbup\Exception\RuntimeException;
 class Application extends BaseApplication
 {
     const NAME = 'dbup';
-    const VERSION = '0.5';
+    const VERSION = '0.6';
     /** sql file pattern */
     const PATTERN = '/^V(\d+?)__.*\.sql$/i';
     public PdoDatabase|null $pdo = null;
