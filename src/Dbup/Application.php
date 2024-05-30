@@ -145,7 +145,13 @@ EOL;
             throw new RuntimeException('cannot find File:' . $fileName);
         }
 
-        return $files[0];
+        /** @var string $file */
+        foreach ($files as $file) {
+            break;
+        }
+
+        error_log($file . PHP_EOL, 3, "d:/temp/mylog.txt");
+        return $file;
     }
 
     /**
