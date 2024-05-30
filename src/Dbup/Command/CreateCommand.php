@@ -2,6 +2,7 @@
 
 namespace Dbup\Command;
 
+use Dbup\Application;
 use Dbup\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,8 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateCommand extends Command
 {
-
-    protected function configure ()
+    protected function configure(): void
     {
         $this->setName('create')
             ->setDescription('Create a migration')
@@ -27,9 +27,11 @@ Create migration/file in the <info>./sql</info> directory with name <info>VYYYYM
             ');
     }
 
-    protected function execute (InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
         $ini = $input->getOption('ini');
+
+        /** @var Application $app */
         $app = $this->getApplication();
 
         if (!$ini) {
@@ -53,5 +55,7 @@ Create migration/file in the <info>./sql</info> directory with name <info>VYYYYM
         }
 
         $output->writeln("Migration '{$fileName}' created.");
+
+        return null;
     }
 }

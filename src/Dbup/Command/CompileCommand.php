@@ -12,11 +12,8 @@
 namespace Dbup\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Dbup\Exception\RuntimeException;
 use Dbup\Util\Compiler;
 
 /**
@@ -24,7 +21,7 @@ use Dbup\Util\Compiler;
  */
 class CompileCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('compile')
@@ -35,9 +32,11 @@ The <info>dbup compile</info> comand compile dbup and make a new dbup.phar file.
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
         $compiler = new Compiler();
         $compiler->compile();
+
+        return null;
     }
 }

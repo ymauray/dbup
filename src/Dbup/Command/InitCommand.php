@@ -12,9 +12,7 @@
 namespace Dbup\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dbup\Exception\RuntimeException;
 
@@ -23,7 +21,7 @@ use Dbup\Exception\RuntimeException;
  */
 class InitCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('init')
@@ -35,7 +33,7 @@ This create <info>.dbup/properties.ini</info> and <info>./sql</info> directory a
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
         $path = './.dbup/properties.ini';
         $output->writeln('<info>create properties.ini:</info> ' . $path);
@@ -50,7 +48,7 @@ This create <info>.dbup/properties.ini</info> and <info>./sql</info> directory a
             }
         }
 
-        $properties =<<<EOL
+        $properties = <<<EOL
 ;; pdo's constructor parameters
 ;; see also http://jp1.php.net/manual/en/pdo.construct.php
 [pdo]
@@ -74,7 +72,7 @@ EOL;
         }
 
 
-        foreach(['./sql', './.dbup/applied'] as $dir){
+        foreach (['./sql', './.dbup/applied'] as $dir) {
             $output->writeln('<info>create directory</info> ' . $dir);
             if (!is_dir($dir)) {
                 if (false === mkdir($dir, 0777 - umask(), true)) {
@@ -85,7 +83,7 @@ EOL;
             }
         }
 
-        $sample =<<<EOL
+        $sample = <<<EOL
 -- sample sql
 select 1+1;
 EOL;
@@ -97,5 +95,7 @@ EOL;
         }
 
         $output->writeln('<info>done.</info>');
+
+        return null;
     }
 }

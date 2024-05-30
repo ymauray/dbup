@@ -11,6 +11,7 @@
 
 namespace Dbup\Command;
 
+use Dbup\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,7 +24,7 @@ use Dbup\Exception\RuntimeException;
  */
 class UpCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('up')
@@ -64,8 +65,9 @@ If you run with <info>--dry-run</info>, this command displays to be applied sql 
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
+        /** @var Application $app */
         $app = $this->getApplication();
         $ini = $input->getOption('ini');
         if (!$ini) {
@@ -81,13 +83,14 @@ If you run with <info>--dry-run</info>, this command displays to be applied sql 
         }
 
         $app->setConfigFromIni($ini);
-        if ($fileName = $input->getArgument('file')) {
+        $fileName = $input->getArgument('file');
+        if ($fileName) {
             $file = $app->getSqlFileByName($fileName);
             $output->writeln('<info>applying specific sql file ... :</info>' . $file->getFileName());
             if (!$isDryRun) {
                 $app->up($file);
             }
-            $sql =file_get_contents($file->getPathName());
+            $sql = file_get_contents($file->getPathName());
             $output->writeln(<<<EOL
 <comment>executed sql:</comment>
 $sql
@@ -100,9 +103,10 @@ EOL
 
         $output->writeln('<info>success to up.</info>');
 
+        return null;
     }
 
-    protected function upAllUnAppliedFiles($app, OutputInterface $output, $isDryRun)
+    protected function upAllUnAppliedFiles($app, OutputInterface $output, $isDryRun): void
     {
         $statuses = $app->getUpCandidates();
 
@@ -114,7 +118,7 @@ EOL
             if (!$isDryRun) {
                 $app->up($status->file);
             }
-            $sql =file_get_contents($status->file->getPathName());
+            $sql = file_get_contents($status->file->getPathName());
             $output->writeln(<<<EOL
 <comment>executed sql:</comment>
 $sql
@@ -125,6 +129,5 @@ EOL
         }
 
         $progress->finish();
-
     }
 }
