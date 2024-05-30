@@ -45,6 +45,6 @@
         "phpcs" : "vendor/bin/phpcs --standard=phpcs.xml --no-cache -s -n --file-list=phpcs.list",
         "phpcbf" : "vendor/bin/phpcbf --standard=PSR12 --file-list=phpcs.list",
         "phpmd" : "vendor/bin/phpmd --ignore-violations-on-exit src,dbup text phpmd.xml",
-        "phpunit" : "vendor/bin/phpunit  --bootstrap vendor/autoload.php --colors tests"
+        "phpunit" : "vendor/bin/phpunit"
     }
 }
