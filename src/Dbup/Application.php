@@ -237,7 +237,7 @@ EOL;
     /**
      * update database
      */
-    public function up(SplFileInfo $file): void
+    public function up(\SplFileInfo $file): void
     {
         $contents = file_get_contents($file->getPathName());
         if (false === $contents) {
@@ -278,7 +278,7 @@ EOL;
     /**
      * copy applied sql file to the applied directory.
      */
-    public function copyToAppliedDir(SplFileInfo $file): void
+    public function copyToAppliedDir(\SplFileInfo $file): void
     {
         if (false === copy($file->getPathName(), $this->appliedFilesDir . '/' . $file->getFileName())) {
             throw new RuntimeException('cannot copy the sql file to applied directory. check the <info>' . $this->appliedFilesDir . '</info> directory.');
