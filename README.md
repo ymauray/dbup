@@ -1,11 +1,15 @@
 Dbup, a simple PHP migration tool
 ==================================
 
-[![Build Status](https://travis-ci.org/brtriver/dbup.png)](https://travis-ci.org/brtriver/dbup)
+This is a fork of [dbup](https://github.com/brtriver/dbup) by `brtriver`. 
+The original project seems to no longer be maintained.
+Things might be broken or not working as expected, while I look into making this project fully compatible with PHP 8.1.
+
+[![Build Status](https://github.com/ymauray/dbup/actions/workflows/ci.yml/badge.svg)](https://github.com/ymauray/dbup)
 
 Dbup is a simple migration tool for PHP.
 
-- You have only to download [`dbup.phar`][1].
+- You have only to download dbup.phar[1] from the `releases` page.
 - Dbup has only `up` command. Dbup does not have `down` command.
 - Dbup use just a plain old sql, so you don't have to learn ORM nor DSL. You write sql file and just call `up` command.
 - Dbup use just PDO class to migrate.
@@ -19,12 +23,12 @@ simple...simple..simple..
 Requirements
 ------------
 
-Dbup works with PHP 5.4.0 or later.
+Dbup works with PHP 8.1 or later.
 
 Install
 --------
 
-Installing Dbup is as easy as it can get. Download the [`dbup.phar`][1] and run `init`,
+Installing Dbup is as easy as it can get. Download `dbup.phar`[1] from the `releases` page and run `init`,
 then `.dbup` and `sql` directory are created and set a sample `properties.ini` file and sqlfile.
 
     php dbup.phar init
@@ -87,4 +91,4 @@ License
 
 Dbup is licensed under the MIT license.
 
-[1]: https://raw.github.com/brtriver/dbup/master/dbup.phar
+[1]: https://raw.github.com/ymauray/dbup/master/dbup.phar
