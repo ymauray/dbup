@@ -3,6 +3,8 @@
 namespace Dbup\Util;
 
 use Phar;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Finder\Finder;
 
 class Compiler
@@ -16,13 +18,19 @@ class Compiler
         $phar = new Phar($pharFile, 0, 'dbup.phar');
         $phar->setSignatureAlgorithm(\Phar::SHA1);
         $phar->startBuffering();
-// CLI Component files
+        // CLI Component files
+        $output = new ConsoleOutput();
+        $progress = new ProgressBar($output);
+        $progress->start(count($this->getFiles()));
+
         foreach ($this->getFiles() as $file) {
             $phar->addFromString($file->getPathName(), file_get_contents($file));
+            $progress->advance();
         }
+        $progress->finish();
 
         $this->addDbup($phar);
-// Stubs
+        // Stubs
         $phar->setStub($this->getStub());
         $phar->stopBuffering();
         unset($phar);
@@ -55,7 +63,21 @@ EOL;
     protected function getFiles(): array
     {
         $finder = new Finder();
-        $srcIterator = $finder->files()->exclude('tests')->name('*.php')->in(array('vendor', 'src'));
+        $srcIterator = $finder
+            ->files()
+            ->in([
+                'vendor',
+                'src'
+            ])
+            ->exclude([
+                'phpunit',
+                'phake',
+                'hamcrest',
+                'phpstan',
+                'squizlabs',
+                'phpmd'
+            ])
+            ->name('*.php');
         return iterator_to_array($srcIterator);
     }
 }
